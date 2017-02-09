@@ -1,19 +1,25 @@
-## Advanced Lane Finding
+# Advanced Lane Finding
 [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
+## What is this project
+This project is about using computer vision techniques to find the lane lines on the road and fit quadratic curves on them.
+## My approach
+First, I calibrate the camera.
 
-The goals / steps of this project are the following:  
+Then, I use color and gradient filter to filter out the lane lines. The color channels I use this time is "HLS" and the gradient filtering technique I use is Sobel.
 
-* Compute the camera calibration matrix and distortion coefficients given a set of chessboard images.
-* Apply the distortion correction to the raw image.  
-* Use color transforms, gradients, etc., to create a thresholded binary image.
-* Apply a perspective transform to rectify binary image ("birds-eye view"). 
-* Detect lane pixels and fit to find lane boundary.
-* Determine curvature of the lane and vehicle position with respect to center.
-* Warp the detected lane boundaries back onto the original image.
-* Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
+Then, I add gaussian blur on image to reduce the noise.
 
----
+Then, I add region filtering and perspective transformation with the same trapizium parameters to gain a bird-eye view of the lane lines.
 
-The images for camera calibration are stored in the folder called `camera_cal`.  The images in `test_images` are for testing your pipeline on single frames.  The video called `project_video.mp4` is the video your pipeline should work well on.  `challenge_video.mp4` is an extra (and optional) challenge for you if you want to test your pipeline.
+Finally, I fit the left line and right line directly using polyfit with degree 2.
 
-If you're feeling ambitious (totally optional though), don't stop there!  We encourage you to go out and take video of your own, calibrate your camera and show us how you would implement this project from scratch!
+## Reflection
+This is my first try of this challenging task.
+
+I think there are several facts to be improved.
+
+First, the noises, such as vehicles, other lane lines and shawdows, is very hard to be filtered. I should choose a better filtering algorithm to get the lane lines out only.
+
+Second, the peak finding, and the polynomial fit, are bad engineered this time. I fit the curve directly without any noise filtering algorithm like sliding windows. Noise unfiltered is one important aspect. So do the algorithm chosen to plot the pixels on fitting space is not robust. I should try other methods on those issues.
+
+Then, I do not know how to detect the vehicle position according to lane lines.
